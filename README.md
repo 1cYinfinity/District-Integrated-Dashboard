@@ -44,4 +44,10 @@ yours,</br>
 1cYinfinity
 
 </br>
-Note: For better use, make one file and under that file make one more file with name "templates" inside this paste the html file and that isha.py file dont paste it under templates, paste outside the templates floder.
+Note: For better use, make one file and under that file make one more file with name "templates" inside this paste the html file and that isha.py file dont paste it under templates, paste outside the templates floder. </br>
+</br>
+Some output results:- </br>
+
+https://github.com/1cYinfinity/District-Integrated-Dashboard/assets/55952519/ead74c31-e3d3-4bd4-8658-91faab633464
+
+
