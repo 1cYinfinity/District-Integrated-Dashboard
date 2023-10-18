@@ -16,8 +16,9 @@ Getting Started:
 
 Clone the repository:
 
-    git clone https://github.com/yourusername/yourproject.git
-    cd yourproject
+    git clone https://github.com/yourusername/yourproject.gi](https://github.com/1cYinfinity/District-Integrated-Dashboard/
+    cd District-Integrated-Dashboard
+    python3 isha.py
 
 Install dependencies:
    
