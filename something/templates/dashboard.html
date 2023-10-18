@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>District Integrated Dashboard</title>
+    <link rel="stylesheet" id="theme-style" href="light-theme.css">
+    <style>
+        /* Common styles for both themes */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to bottom, #f5f5f5, #fff);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        h1 {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #3498db;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #3498db;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Dark theme styles */
+        body.dark-theme {
+            background-image: linear-gradient(to bottom, #333, #222);
+            color: white;
+        }
+
+        body.dark-theme h1 {
+            background-color: #222;
+        }
+
+        body.dark-theme table, body.dark-theme th, body.dark-theme td {
+            border-color: #222;
+        }
+
+        /* Light theme styles */
+        body.light-theme {
+            background-image: linear-gradient(to bottom, #f5f5f5, #fff);
+            color: #333;
+        }
+
+        body.light-theme h1 {
+            background-color: #3498db;
+        }
+
+        body.light-theme table, body.light-theme th, body.light-theme td {
+            border-color: #3498db;
+        }
+
+        /* Theme toggle button styles */
+        .theme-toggle {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .theme-toggle button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .theme-toggle button:hover {
+            background-color: #2588c7;
+        }
+    </style>
+</head>
+<body>
+    <h1>District Integrated Dashboard</h1>
+    
+    <!-- Theme toggle button -->
+    <div class="theme-toggle">
+        <button id="dark-theme-button">Dark Theme</button>
+        <button id="light-theme-button">Light Theme</button>
+    </div>
+
+    <h2>Ongoing Projects</h2>
+    <table>
+         <tr>
+            <th>Project Name</th>
+            <th>Department</th>
+            <th>Progress (%)</th>
+        </tr>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project.name }}</td>
+            <td>{{ project.department }}</td>
+            <td>{{ project.progress }}%</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Schemes</h2>
+    <table>
+        <tr>
+            <th>Scheme Name</th>
+            <th>Department</th>
+            <th>Progress (%)</th>
+        </tr>
+        {% for scheme in schemes %}
+        <tr>
+            <td>{{ scheme.name }}</td>
+            <td>{{ scheme.department }}</td>
+            <td>{{ scheme.progress }}%</td>
+        </tr>
+        {% endfor %}   
+         </table>
+
+    <div class="chart-container">
+        <h2>Interactive Chart</h2>
+        <canvas id="projectChart" width="400" height="200"></canvas>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById('projectChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Road Construction', 'Healthcare Expansion', 'Education Enhancement', 'Agriculture Development'],
+                datasets: [{
+                    label: 'Progress (%)',
+                    data: [70, 90, 60, 75],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Theme toggle functionality
+        const darkThemeButton = document.getElementById('dark-theme-button');
+        const lightThemeButton = document.getElementById('light-theme-button');
+        const themeStyleLink = document.getElementById('theme-style');
+        const body = document.body;
+
+        darkThemeButton.addEventListener('click', () => {
+            body.classList.add('dark-theme');
+            body.classList.remove('light-theme');
+            themeStyleLink.href = 'dark-theme.css';
+        });
+
+        lightThemeButton.addEventListener('click', () => {
+            body.classList.add('light-theme');
+            body.classList.remove('dark-theme');
+            themeStyleLink.href = 'light-theme.css';
+        });
+    </script>
+    
+    <div id="clock" style="text-align: center; font-size: 24px; margin-top: 20px;"></div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('clock').textContent = timeString;
+    }
+
+    // Update the clock every second
+    setInterval(updateClock, 1000);
+
+    // Initial update
+    updateClock();
+</script>
+    
+</body>
+</html>
